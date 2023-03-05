@@ -36,7 +36,7 @@ public class Joueur {
 	 * @param Game jeu en cours
 	 * @return entier
 	 */
-	public int getPrise(Jeu Game) {
+	public int getPrise(Jeu game) {
 		if this.estIlOrdinateur() {
 			if this.getNiveau() == "rapide" {
 				return 3;
@@ -53,11 +53,18 @@ public class Joueur {
 		}
 		else {
 			Scanner scanner = new Scanner(System.in);
-	        System.out.prints("Ecrire un nombre: ");
+	        System.out.prints(this.name + ", combien d'allumettes ?");
 	        string text = scanner.nextLine(); 
 	        try {
-	        	//int nombre = scanner.nextInt();
 	        	int nombre = ParseInt(text);
+	        	if nombre < 1 {
+	        		Exception coupInvaException = new CoupInvalideException(nombre,"Nombre invalide :"+ toString(nombre)+'(<1)')
+	        		throw coupInvaException;
+	        	}
+	        catch (Exception e) {
+	        	System.out.println();
+	        	System.out.prints('Vous devez donner un entier')
+				}
 	        }
 	        	
 	        return nombre

@@ -22,7 +22,7 @@ public interface Jeu {
 	 * @param nbPrises
 	 * @param name
 	 */
-	void afficherTour(int nbPrises, Joueur name);
+	void afficherTour(int nbPrises, Joueur joueur);
 	
 	/** Affiche les résultats finaux;
 	 * @param Winner
