@@ -14,18 +14,20 @@ public class Jouer {
 	public static void main(String[] args) {
 		try {
 			verifierNombreArguments(args);
-			Joueur j1 = new Joueur();
-			Joueur j2 = new Joueur();
-			Arbitre arb = new Arbitre(j1,j2);
-			Jeu jeu = new Jeu(13,3);
-			arb.arbitrerConfiant(jeu);
-			
 		} catch (ConfigurationException e) {
 			System.out.println();
 			System.out.println("Erreur : " + e.getMessage());
 			afficherUsage();
 			System.exit(1);
 		}
+		
+		Joueur j1 = new Joueur();
+		Joueur j2 = new Joueur();
+		Arbitre arb = new Arbitre(j1,j2);
+		Jeu jeu = new Jeu(13,3);
+		arb.arbitrerConfiant(jeu);
+		j
+		
 	}
 
 	private static void verifierNombreArguments(String[] args) {
