@@ -20,9 +20,8 @@ public interface Jeu {
 	 * entre 1 et PRISE_MAX, dans la limite du nombre d'allumettes encore
 	 * en jeu.
 	 * @param nbPrises nombre d'allumettes prises.
-	 * @throws CoupInvalideException tentative de prendre un nombre invalide d'allumettes
 	 */
-	void retirer(int nbPrises) throws Exception;
+	void retirer(int nbPrises);
 	
 	/** Afficher le coup joué au tour actuel.
 	 * @param nbPrises

@@ -19,31 +19,34 @@ public class JeuAllu implements Jeu {
 	}
 	
 	
-	public void retirer(int nbPrises) throws Exception {
+	public void retirer(int nbPrises){
+		try {
 		if (nbPrises > this.stock) {
-    		Exception coupInvaException = new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+"(<1)");
-			throw coupInvaException;
+    		throw new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+"(<1)");
 		}
 		else if (nbPrises > PRISE_MAX) {
-    		Exception coupInvaException = new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+"(> allumettes restantes)");
-			throw coupInvaException;
+			throw  new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+"(>3)");
 		}
 		else {
 			this.stock = this.stock - nbPrises;
+		}
+		}
+		catch (CoupInvalideException e) {
+			System.out.println(e.getProbleme());
 		}
 	}
 			
 	
 	public void afficherTour(int nbPrises, Joueur joueur) {
-		System.out.println();
-		System.out.println(joueur.getNom() + " prend ");
-		System.out.println(Integer.toString(nbPrises));
+		String all;
 		if (nbPrises > 0) {
-			System.out.println(" allumettes");
+			all =" allumettes";
 		}
 		else {
-			System.out.println(" allumette");
+			all =" allumette";
 		}
+		System.out.println(joueur.getNom() + " prend "+Integer.toString(nbPrises)+all);
+
 	}
 	
 	public void afficherResulatFinal (Joueur winner, Joueur looser) {

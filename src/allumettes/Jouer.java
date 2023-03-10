@@ -21,8 +21,53 @@ public class Jouer {
 			System.exit(1);
 		}
 		
-		Joueur j1 = new Joueur();
-		Joueur j2 = new Joueur();
+
+
+		// Détecter si le joueur est un ordinateur ou un humain en analysant sa stratégie parmi humain, naîf, expert, rapide
+		Joueur j1 = new  Joueur();
+		Joueur j2 = new  Joueur();
+
+		
+		//Détecter si le paramètre confiant est entré
+		int offset = 0;
+		boolean estConfiant = false;
+		if (args[0].contentEquals("-confiant")) {
+			estConfiant = true;
+			offset = 1;
+		}
+
+		// Récupérer le premier argument
+		String[] arg1 = args[offset+0].split("@");
+		String nom1 = arg1[0];
+		String strategie1 = arg1[1];
+		// Récupérer le second argument
+		String[] arg2 = args[offset+1].split("@");
+		String nom2 = arg2[0];
+		String strategie2 = arg2[1];
+
+		//Joueur 1
+		if (strategie1.equals("humain")) {
+			j1.setEstOrdinateur(false);
+			j1.setNom(nom1);
+		}
+		else {
+			j1.setEstOrdinateur(true);
+			j1.setNom(nom1);
+			j1.setNiveau(strategie1);
+		}
+
+		//Joueur 2
+		if (strategie2.equals("humain")) {
+			j2.setEstOrdinateur(false);
+			j2.setNom(nom2);
+		}
+		else {
+			j2.setEstOrdinateur(true);
+			j2.setNom(nom2);
+			j2.setNiveau(strategie2);
+		}
+
+		// Lancer la partie
 		Arbitre arb = new Arbitre(j1,j2);
 		JeuAllu jeu = new JeuAllu(13,3);
 		arb.arbitrerConfiant(jeu);

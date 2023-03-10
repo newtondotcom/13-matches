@@ -19,12 +19,6 @@ public class Joueur {
 		this.nom = nom;
 	}
 	
-	public Joueur(boolean isOrdi, String niveau , String nom , boolean isConfiant) {
-		this.estOrdinateur = isOrdi;
-		this.niveau = niveau;
-		this.nom = nom;
-	}
-	
 	public Joueur(boolean isOrdi, String nom) {
 		this.estOrdinateur = isOrdi;
 		this.nom = nom;
@@ -33,101 +27,51 @@ public class Joueur {
 	/** Demander le nombre d'allumettes que le joueur souhaite retirer;
 	 * @param Game jeu en cours
 	 * @return entier
-	 * @throws Exception 
 	 */
-	public int getPrise(Jeu game) {
+	public int getPriseNonConfiante(Jeu game) {
 		int nombre = 0;
 		if (this.estIlOrdinateur()) {
-			if (this.getNiveau() == "rapide") {
+			if (this.getNiveau().equals("rapide") ) {
 				return 3;
 			}
-			else if (this.getNiveau() == "naif") {
+			else if (this.getNiveau().equals("naif")) {
 				Random gen = new Random();
 				nombre = gen.nextInt(5)+1;
 				return nombre;
 			}
-			else {
+			else if (this.getNiveau().equals("expert")) {
 				//IMPLEmenTER LE MODE EXPERt
 				return 1;
 			}
 		}
 		else {
-			Scanner scanner = new Scanner(System.in);
-	        while(true){
-	            try{
-	    	        System.out.println(this.nom + ", combien d'allumettes ?");
-	                nombre = Integer.parseInt(scanner.next());
-	    	        if (nombre < 1) {
-		        		Exception coupInvaException = new CoupInvalideException(nombre,"Nombre invalide :"+ Integer.toString(nombre)+"(<1)");
-		        		throw coupInvaException;
-	    	        }
-	    	        else if (nombre > 3) {
-		        		Exception coupInvaException = new CoupInvalideException(nombre,"Nombre invalide :"+ Integer.toString(nombre)+"(>3)");
-		        		throw coupInvaException;
-	    	        }
-	    	        else if (nombre > game.getNombreAllumettes()) {
-		        		Exception coupInvaException = new CoupInvalideException(nombre,"Nombre invalide :"+ Integer.toString(nombre)+"(>allumettes restantes)");
-		        		throw coupInvaException;
-	    	        }
-	    	        else {
-	    	        	break;
-	    	        }
-	            }
-	            catch (coupInvaException e) {
-				
-				} 
+			boolean entreeNonEntier = true;
+			do {
+				System.out.print(this.nom + ", combien d'allumettes ? ");
+				Scanner scanner = new Scanner(System.in);
 
-	            catch(NumberFormatException e){
-		        	System.out.println();
-		        	System.out.println("Vous devez donner un entier");
-	            }
-	        }
-	        scanner.close();
-		}
-		return nombre;
-
-	}
+				String entree = scanner.nextLine();        
 	
-	/** Demander le nombre d'allumettes que le joueur souhaite retirer quand l'arbitre n'est pas confiant.
-	 * @param Game jeu en cours
-	 * @return entier
-	 * @throws Exception 
-	 */
-	public int getPriseNonConfiante(Jeu game) throws Exception {
-			int nombre = 0;
-			Scanner scanner = new Scanner(System.in);
-	        while(true){
-	            try{
-	            	if (scanner.next().equals("triche")) {
-	            		game.setNombreAllumettes(game.getNombreAllumettes()-1);
-	            	}
-	    	        System.out.println(this.nom + ", combien d'allumettes ?");
-	                nombre = Integer.parseInt(scanner.next());
-	    	        if (nombre < 1) {
-		        		Exception coupInvaException = new CoupInvalideException(nombre,"Nombre invalide :"+ Integer.toString(nombre)+"(<1)");
-		        		throw coupInvaException;
-	    	        }
-	    	        else if (nombre > 3) {
-		        		Exception coupInvaException = new CoupInvalideException(nombre,"Nombre invalide :"+ Integer.toString(nombre)+"(>3)");
-		        		throw coupInvaException;
-	    	        }
-	    	        else if (nombre > game.getNombreAllumettes()) {
-		        		Exception coupInvaException = new CoupInvalideException(nombre,"Nombre invalide :"+ Integer.toString(nombre)+"(>allumettes restantes)");
-		        		throw coupInvaException;
-	    	        }
-	    	        else {
-	    	        	break;
-	    	        }
-	            }
-	            catch(NumberFormatException e){
-		        	System.out.println();
-		        	System.out.println("Vous devez donner un entier");
-	            }
+				if (entree.equals("triche") && game.getNombreAllumettes() != 1) {
+					game.retirer(1);
+					System.out.println("[Une allumette en moins, plus que "
+					+ game.getNombreAllumettes() + ". Chut !]");
+				} else {
+					try {
+						nombre = Integer.parseInt(entree);
+						entreeNonEntier = false;
+						} catch (NumberFormatException e) {
+							System.out.println("Vous devez donner un entier.");
+						}
+				}
+			} while (entreeNonEntier);
+			return nombre;
 	        }
-	        scanner.close();
-		return nombre;
+	        
+		}
 
-	}
+	
+	
 	
 	/** Obtenir si le joueur est l'ordinateur.
 	 * @return oui ou non
@@ -149,5 +93,27 @@ public class Joueur {
 	public String getNom() {
 		return this.nom;
 	}
+
+	/** Définir le nom du joueur.
+	 * @param nom
+	 */
+	public void setNom(String nom){
+		this.nom = nom;
+	}
+
+	/** Définir si le joueur est un ordinateur.
+	 * @param estOrdinateur
+	 */
+	public void setEstOrdinateur(boolean estOrdinateur) {
+		this.estOrdinateur = estOrdinateur;
+	}
+
+	/** Définir le niveau du joueur si ordinateur.
+	 * @param niveau
+	 */
+	public void setNiveau(String niveau) {
+		this.niveau = niveau;
+	}
+
 	
 }
