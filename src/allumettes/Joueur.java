@@ -35,7 +35,7 @@ public class Joueur {
 	 * @return entier
 	 * @throws Exception 
 	 */
-	public int getPrise(Jeu game) throws Exception {
+	public int getPrise(Jeu game) {
 		int nombre = 0;
 		if (this.estIlOrdinateur()) {
 			if (this.getNiveau() == "rapide") {
@@ -73,6 +73,9 @@ public class Joueur {
 	    	        	break;
 	    	        }
 	            }
+	            catch (coupInvaException e) {
+					;
+				}
 	            catch(NumberFormatException e){
 		        	System.out.println();
 		        	System.out.println("Vous devez donner un entier");

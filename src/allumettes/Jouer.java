@@ -24,9 +24,8 @@ public class Jouer {
 		Joueur j1 = new Joueur();
 		Joueur j2 = new Joueur();
 		Arbitre arb = new Arbitre(j1,j2);
-		Jeu jeu = new Jeu(13,3);
+		JeuAllu jeu = new JeuAllu(13,3);
 		arb.arbitrerConfiant(jeu);
-		j
 		
 	}
 

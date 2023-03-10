@@ -20,7 +20,7 @@ public class Arbitre {
 		return this.estConfiant;
 	}
 	
-	public void arbitrerConfiant (Jeu jeu) throws Exception {
+	public void arbitrerConfiant (Jeu jeu) {
 		isPlayer1Turn = true;
 		while (jeu.getNombreAllumettes()>0) {
 			int nb = jeu.getNombreAllumettes();
