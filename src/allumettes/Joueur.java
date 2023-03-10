@@ -74,8 +74,9 @@ public class Joueur {
 	    	        }
 	            }
 	            catch (coupInvaException e) {
-					;
-				}
+				
+				} 
+
 	            catch(NumberFormatException e){
 		        	System.out.println();
 		        	System.out.println("Vous devez donner un entier");
