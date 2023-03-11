@@ -1,7 +1,6 @@
 package allumettes;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class Joueur {
 	
@@ -24,33 +23,40 @@ public class Joueur {
 		this.nom = nom;
 	}
 	
+
 	/** Demander le nombre d'allumettes que le joueur souhaite retirer;
-	 * @param Game jeu en cours
+	 * @param game jeu en cours
 	 * @return entier
 	 */
 	public int getPrise(Jeu game) {
 		int nombre = 0;
 		if (this.estIlOrdinateur()) {
 			if (this.getNiveau().equals("rapide") ) {
-				return 3;
+				if (game.getNombreAllumettes() > Jeu.PRISE_MAX) {
+					return Jeu.PRISE_MAX;
+				} else {
+					return Math.max(1, game.getNombreAllumettes() - 1);
+				}
 			}
 			else if (this.getNiveau().equals("naif")) {
-				Random gen = new Random();
-				nombre = gen.nextInt(5)+1;
-				return nombre;
+				Random random = new Random();
+				return 1 + random.nextInt(Jeu.PRISE_MAX);
 			}
 			else if (this.getNiveau().equals("expert")) {
-				//IMPLEmenTER LE MODE EXPERt
-				return 1;
+				int nbAlea = Math.floorMod(game.getNombreAllumettes() - Jouer.nballu, game.PRISE_MAX + 1);
+				if (nbAlea == 0) {
+					return 1;
+				} else {
+					return nbAlea;
+				}
 			}
 		}
 		else {
 			boolean entreeNonEntier = true;
 			do {
 				System.out.print(this.nom + ", combien d'allumettes ? ");
-				Scanner scanner = new Scanner(System.in);
 
-				String entree = scanner.nextLine();        
+				String entree = Arbitre.SCANNER.nextLine();        
 	
 				if (entree.equals("triche") && game.getNombreAllumettes() != 1) {
 					try {game.retirer(1);} catch (CoupInvalideException e) {;}//impossible normalement;
@@ -62,14 +68,15 @@ public class Joueur {
 					try {
 						nombre = Integer.parseInt(entree);
 						entreeNonEntier = false;
+						return nombre;
 						} catch (NumberFormatException e) {
 							System.out.println("Vous devez donner un entier.");
 						}
 				}
 			} while (entreeNonEntier);
-			
+			return nombre;
 	    }
-		return nombre;
+		return 0;
 	}
 
 	

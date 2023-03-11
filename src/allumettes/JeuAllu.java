@@ -1,13 +1,11 @@
 package allumettes;
 
-
 public class JeuAllu implements Jeu {
 	private int stock;
-	private int PRISE_MAX;
+	private int PRISE_MAX = 3;
 	
-	public JeuAllu(int stock, int prisemax) {
+	public JeuAllu(int stock) {
 		this.stock = stock;
-		this.PRISE_MAX = prisemax;
 	}
 	
 	public int getNombreAllumettes() {
@@ -21,10 +19,13 @@ public class JeuAllu implements Jeu {
 	
 	public void retirer(int nbPrises) throws CoupInvalideException{
 		if (nbPrises > this.stock) {
-    		throw new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+" (<1)");
+    		throw new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (< 1)");
 		}
 		else if (nbPrises > PRISE_MAX) {
-			throw  new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+" (>3)");
+			throw  new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (> 3)");
+		}
+		else if (nbPrises < 1) {
+			throw  new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (< 1)");
 		}
 		else {
 			this.stock = this.stock - nbPrises;
@@ -45,8 +46,6 @@ public class JeuAllu implements Jeu {
 	}
 	
 	public void afficherResulatFinal (Joueur winner, Joueur looser) {
-		System.out.println();
-		System.out.println();
 		System.out.println();
 		System.out.println(winner.getNom() + " gagne");
 		System.out.println(looser.getNom() + " perd");

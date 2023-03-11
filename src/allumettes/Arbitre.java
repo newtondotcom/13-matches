@@ -2,18 +2,20 @@ package allumettes;
 
 import java.time.chrono.IsoChronology;
 
+import java.util.Scanner;
+
 public class Arbitre {
 	private Joueur j1;
 	private Joueur j2;
 	private Boolean isPlayer1Turn;
 	private Boolean estConfiant;
-	private int compteur;
 	
+	public static final Scanner SCANNER = new Scanner(System.in);
+
 	public Arbitre(Joueur j1,Joueur j2) {
 		this.j1 = j1;
 		this.j2 = j2;
 		this.isPlayer1Turn = true;
-		this.compteur = 1;
 	}
 	
 	/** Obtenir si le joueur est confiant.
@@ -44,9 +46,7 @@ public class Arbitre {
 		try {
 			coup = joueur.getPrise(jeuConfiant(jeu));
 			affichageAllumettesSingulier(coup, joueur);
-			if (!retirerAllumettes(jeu, coup)){
-				faireJouer(jeu, joueur);
-			}
+			retirerAllumettes(jeu, coup);
 		} catch (OperationInterditeException e) {
 			System.out.println("Abandon de la partie car " + joueur.getNom()
 			+ " triche !");
@@ -62,17 +62,13 @@ public class Arbitre {
 	 * @param coup le nombre d'allumettes à retirer
 	 * @throws CoupInvalideException tentative de prendre un nombre invalide d'allumettes
 	 */
-	public boolean retirerAllumettes(Jeu jeu, int coup) {
-		boolean valid = false;
+	public void retirerAllumettes(Jeu jeu, int coup) {
 		try {
 			jeu.retirer(coup);
-			this.compteur++;
-			valid = true;
-			return valid;
+			this.isPlayer1Turn = !this.isPlayer1Turn;
 		} catch (CoupInvalideException e) {
-			System.out.print("Impossible !");
-			System.out.println(e.getCoup() + " (" + e.getProbleme() + ")");
-			return valid;
+			System.out.print("Impossible ! ");
+			System.out.println(e.getProbleme());
 		}
 	}
 	
@@ -86,14 +82,13 @@ public class Arbitre {
 				notTriching = faireJouer(jeu, j2);
 			}
 			System.out.println();
-			this.isPlayer1Turn = !this.isPlayer1Turn;
 		}
 		if (notTriching) {
 			if (isPlayer1Turn) {
-				jeu.afficherResulatFinal(j2, j1);
+				jeu.afficherResulatFinal(j1, j2);
 			}
 			else {
-				jeu.afficherResulatFinal(j1, j2);
+				jeu.afficherResulatFinal(j2, j1);
 			}	
 		}
 	
