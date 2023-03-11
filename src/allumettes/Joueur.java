@@ -28,7 +28,7 @@ public class Joueur {
 	 * @param Game jeu en cours
 	 * @return entier
 	 */
-	public int getPriseNonConfiante(Jeu game) {
+	public int getPrise(Jeu game) {
 		int nombre = 0;
 		if (this.estIlOrdinateur()) {
 			if (this.getNiveau().equals("rapide") ) {
@@ -53,10 +53,12 @@ public class Joueur {
 				String entree = scanner.nextLine();        
 	
 				if (entree.equals("triche") && game.getNombreAllumettes() != 1) {
-					game.retirer(1);
+					try {game.retirer(1);} catch (CoupInvalideException e) {;}//impossible normalement;
 					System.out.println("[Une allumette en moins, plus que "
 					+ game.getNombreAllumettes() + ". Chut !]");
-				} else {
+				}
+				
+				else {
 					try {
 						nombre = Integer.parseInt(entree);
 						entreeNonEntier = false;
@@ -65,10 +67,10 @@ public class Joueur {
 						}
 				}
 			} while (entreeNonEntier);
-			return nombre;
-	        }
-	        
-		}
+			
+	    }
+		return nombre;
+	}
 
 	
 	

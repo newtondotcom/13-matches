@@ -21,7 +21,7 @@ public interface Jeu {
 	 * en jeu.
 	 * @param nbPrises nombre d'allumettes prises.
 	 */
-	void retirer(int nbPrises);
+	void retirer(int nbPrises) throws CoupInvalideException;
 	
 	/** Afficher le coup joué au tour actuel.
 	 * @param nbPrises

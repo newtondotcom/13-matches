@@ -21,8 +21,6 @@ public class Jouer {
 			System.exit(1);
 		}
 		
-
-
 		// Détecter si le joueur est un ordinateur ou un humain en analysant sa stratégie parmi humain, naîf, expert, rapide
 		Joueur j1 = new  Joueur();
 		Joueur j2 = new  Joueur();
@@ -69,8 +67,9 @@ public class Jouer {
 
 		// Lancer la partie
 		Arbitre arb = new Arbitre(j1,j2);
+		arb.setEstConfiant(estConfiant);
 		JeuAllu jeu = new JeuAllu(13,3);
-		arb.arbitrerConfiant(jeu);
+		arb.arbitrer(jeu);
 		
 	}
 

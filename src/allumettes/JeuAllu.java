@@ -19,20 +19,15 @@ public class JeuAllu implements Jeu {
 	}
 	
 	
-	public void retirer(int nbPrises){
-		try {
+	public void retirer(int nbPrises) throws CoupInvalideException{
 		if (nbPrises > this.stock) {
-    		throw new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+"(<1)");
+    		throw new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+" (<1)");
 		}
 		else if (nbPrises > PRISE_MAX) {
-			throw  new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+"(>3)");
+			throw  new CoupInvalideException(nbPrises,"Nombre invalide :"+ Integer.toString(nbPrises)+" (>3)");
 		}
 		else {
 			this.stock = this.stock - nbPrises;
-		}
-		}
-		catch (CoupInvalideException e) {
-			System.out.println(e.getProbleme());
 		}
 	}
 			

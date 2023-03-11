@@ -7,11 +7,13 @@ public class Arbitre {
 	private Joueur j2;
 	private Boolean isPlayer1Turn;
 	private Boolean estConfiant;
+	private int compteur;
 	
 	public Arbitre(Joueur j1,Joueur j2) {
 		this.j1 = j1;
 		this.j2 = j2;
 		this.isPlayer1Turn = true;
+		this.compteur = 1;
 	}
 	
 	/** Obtenir si le joueur est confiant.
@@ -28,16 +30,6 @@ public class Arbitre {
 		this.estConfiant = estConfiant;
 	}
 
-	public void arbitre(Jeu jeu, Boolean isConfiant) {
-		this.estConfiant = isConfiant;
-		if (isConfiant) {
-			arbitrerConfiant(jeu);
-		}
-		else {
-			arbitrerNonConfiant(jeu);
-		}
-	}
-
 	/** Faire jouer le joueur en argument et savoir s'il est tricheur ou non.
 	 * @param jeu le jeu correspondant
 	 * @param joueur le joueur correspondant
@@ -46,21 +38,23 @@ public class Arbitre {
 	 */
 	public boolean faireJouer(Jeu jeu, Joueur joueur) {
 		boolean estTricheur = false;
-
+		int coup;
+		int nb = jeu.getNombreAllumettes();
+		System.out.println("Allumettes restantes : "+ Integer.toString(nb));
 		try {
-			int coup = joueur.getPrise(jeuConfiant(jeu));
+			coup = joueur.getPrise(jeuConfiant(jeu));
 			affichageAllumettesSingulier(coup, joueur);
-			retirerAllumettes(jeu, coup);
+			if (!retirerAllumettes(jeu, coup)){
+				faireJouer(jeu, joueur);
+			}
 		} catch (OperationInterditeException e) {
 			System.out.println("Abandon de la partie car " + joueur.getNom()
 			+ " triche !");
 			estTricheur = true;
 		}
-
-		return estTricheur;
+		return !estTricheur;
 	}
 
-	private int compteur;
 	/** Retirer des allumettes.  Le nombre d'allumettes doit être compris
 	 * entre 1 et PRISE_MAX, dans la limite du nombre d'allumettes encore
 	 * en jeu.
@@ -68,61 +62,41 @@ public class Arbitre {
 	 * @param coup le nombre d'allumettes à retirer
 	 * @throws CoupInvalideException tentative de prendre un nombre invalide d'allumettes
 	 */
-	public void retirerAllumettes(Jeu jeu, int coup) {
+	public boolean retirerAllumettes(Jeu jeu, int coup) {
+		boolean valid = false;
 		try {
 			jeu.retirer(coup);
 			this.compteur++;
+			valid = true;
+			return valid;
 		} catch (CoupInvalideException e) {
-			System.out.print("Impossible ! Nombre invalide : ");
+			System.out.print("Impossible !");
 			System.out.println(e.getCoup() + " (" + e.getProbleme() + ")");
+			return valid;
 		}
 	}
 	
-	public void arbitrerConfiant (Jeu jeu) {
-		while (jeu.getNombreAllumettes()>0) {
-			int nb = jeu.getNombreAllumettes();
-			int prise ;
-			System.out.println("Allumettes restantes : "+ Integer.toString(nb));
-			if (isPlayer1Turn) {
-				prise = j1.getPriseNonConfiante(jeu);
-				jeu.afficherTour(prise, j1);
-			}
-			else {
-				prise = j2.getPriseNonConfiante(jeu);
-			}
-			jeu.retirer(prise);
-			this.isPlayer1Turn = !(this.isPlayer1Turn);
-		}
-		if (isPlayer1Turn) {
-			jeu.afficherResulatFinal(j2, j1);
-		}
-		else {
-			jeu.afficherResulatFinal(j1, j2);
-		}		
-	}
-	
-	public void arbitrerNonConfiant (Jeu jeu) {
+	public void arbitrer (Jeu jeu) {
 		boolean notTriching = true;
 		while (jeu.getNombreAllumettes()>0 && notTriching) {
-			int nb = jeu.getNombreAllumettes();
-			int prise;
-			System.out.println("Allumettes restantes : "+ Integer.toString(nb));
 			if (isPlayer1Turn) {
-				prise = j1.getPriseNonConfiante(jeu);
-				jeu.afficherTour(prise, j1);
+				notTriching = faireJouer(jeu, j1);
 			}
 			else {
-				prise = j2.getPriseNonConfiante(jeu);
+				notTriching = faireJouer(jeu, j2);
 			}
-			jeu.retirer(prise);
-			this.isPlayer1Turn = !(this.isPlayer1Turn);
+			System.out.println();
+			this.isPlayer1Turn = !this.isPlayer1Turn;
 		}
-		if (isPlayer1Turn) {
-			jeu.afficherResulatFinal(j2, j1);
+		if (notTriching) {
+			if (isPlayer1Turn) {
+				jeu.afficherResulatFinal(j2, j1);
+			}
+			else {
+				jeu.afficherResulatFinal(j1, j2);
+			}	
 		}
-		else {
-			jeu.afficherResulatFinal(j1, j2);
-		}		
+	
 	}
 
 		/** Afficher le nombre d'allumettes que le joueur prend.
@@ -142,12 +116,11 @@ public class Arbitre {
 	 * @return le bon jeu en fonction de l'option -confiant
 	 */
 	public Jeu jeuConfiant(Jeu jeu) {
-		if (!this.confiant) {
+		if (!this.estConfiant) {
 			return new JeuProcuration(jeu);
 		} else {
 			return jeu;
 		}
 	}
-
 }
 

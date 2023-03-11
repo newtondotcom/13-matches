@@ -4,6 +4,7 @@ public class JeuProcuration implements Jeu {
 
 	/** Le jeu normal des allumettes.*/
 	private Jeu jeu;
+	
 
 
 	/** Constuire le jeu des allumettes avec un nb d'allumettes initial mis en argument.
@@ -29,5 +30,30 @@ public class JeuProcuration implements Jeu {
 	 */
 	public void retirer(int nbPrises) throws CoupInvalideException {
 		throw new OperationInterditeException("Un joueur a utilisé la méthode retirer !");
+	}
+
+	public void setNombreAllumettes(int value) {
+		this.jeu.setNombreAllumettes(value);
+	}
+
+		
+	public void afficherTour(int nbPrises, Joueur joueur) {
+		String all;
+		if (nbPrises > 0) {
+			all =" allumettes";
+		}
+		else {
+			all =" allumette";
+		}
+		System.out.println(joueur.getNom() + " prend "+Integer.toString(nbPrises)+all);
+
+	}
+	
+	public void afficherResulatFinal (Joueur winner, Joueur looser) {
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println(winner.getNom() + " gagne");
+		System.out.println(looser.getNom() + " perd");
 	}
 }
