@@ -50,6 +50,18 @@ public class Joueur {
 					return nbAlea;
 				}
 			}
+			else if (this.getNiveau().equals("tricheur")) {
+				System.out.println("[Je triche ...]");
+				while (game.getNombreAllumettes() > 2) {
+					try {
+						game.retirer(1);
+					} catch (CoupInvalideException e) {
+						// Impossible d'arriver ici.
+					}
+				}
+				System.out.println("[Allumettes restantes : " + game.getNombreAllumettes() + "]");
+				return 1;
+			}
 		}
 		else {
 			boolean entreeNonEntier = true;
