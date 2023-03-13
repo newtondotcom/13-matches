@@ -7,6 +7,7 @@ package allumettes;
  */
 public class Jouer {
 
+	/** Nombre d'allumettes au début de la partie. */
 	public static final int nballu = 13;
 
 	/** Lancer une partie. En argument sont donnés les deux joueurs sous
@@ -42,6 +43,7 @@ public class Jouer {
 		String[] arg1 = args[offset+0].split("@");
 		String nom1 = arg1[0];
 		String strategie1 = arg1[1];
+
 		// Récupérer le second argument
 		String[] arg2 = args[offset+1].split("@");
 		String nom2 = arg2[0];
@@ -77,6 +79,10 @@ public class Jouer {
 		
 	}
 
+	/** Vérifier le nombre d'arguments fournis sur la ligne de commande.
+	 * @param args les arguments fournis
+	 * @throws ConfigurationException si le nombre d'arguments est incorrect
+	 */
 	private static void verifierNombreArguments(String[] args) {
 		final int nbJoueurs = 2;
 		if (args.length < nbJoueurs) {

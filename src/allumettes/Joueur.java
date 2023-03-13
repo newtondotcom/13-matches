@@ -4,20 +4,33 @@ import java.util.Random;
 
 public class Joueur {
 	
+	/** Nom du joueur */
 	private String nom;
 	
+	/** Est-ce un ordinateur ? */
 	private boolean estOrdinateur ;
 	
+	/** Niveau de l'ordinateur */
 	private String niveau; 
 	
+
 	public Joueur() {}
 	
+	/** Constructeur de Joueur, un ordinateur.
+	 * @param isOrdi est-ce un ordinateur ?
+	 * @param niveau niveau de l'ordinateur
+	 * @param nom nom du joueur
+	 */
 	public Joueur(boolean isOrdi, String niveau , String nom) {
 		this.estOrdinateur = isOrdi;
 		this.niveau = niveau;
 		this.nom = nom;
 	}
 	
+	/** Constructeur de Joueur, un humain.
+	 * @param isOrdi est-ce un ordinateur ?
+	 * @param nom nom du joueur
+	 */
 	public Joueur(boolean isOrdi, String nom) {
 		this.estOrdinateur = isOrdi;
 		this.nom = nom;
@@ -31,6 +44,7 @@ public class Joueur {
 	public int getPrise(Jeu game) {
 		int nombre = 0;
 		if (this.estIlOrdinateur()) {
+
 			if (this.getNiveau().equals("rapide") ) {
 				if (game.getNombreAllumettes() > Jeu.PRISE_MAX) {
 					return Jeu.PRISE_MAX;
@@ -38,10 +52,12 @@ public class Joueur {
 					return Math.max(1, game.getNombreAllumettes() - 1);
 				}
 			}
+
 			else if (this.getNiveau().equals("naif")) {
 				Random random = new Random();
 				return 1 + random.nextInt(Jeu.PRISE_MAX);
 			}
+
 			else if (this.getNiveau().equals("expert")) {
 				int nbAlea = Math.floorMod(game.getNombreAllumettes() - Jouer.nballu, game.PRISE_MAX + 1);
 				if (nbAlea == 0) {
@@ -50,6 +66,7 @@ public class Joueur {
 					return nbAlea;
 				}
 			}
+
 			else if (this.getNiveau().equals("tricheur")) {
 				System.out.println("[Je triche ...]");
 				while (game.getNombreAllumettes() > 2) {
@@ -63,6 +80,7 @@ public class Joueur {
 				return 1;
 			}
 		}
+
 		else {
 			boolean entreeNonEntier = true;
 			do {
@@ -88,7 +106,7 @@ public class Joueur {
 			} while (entreeNonEntier);
 			return nombre;
 	    }
-		return 0;
+		return 0; //inatteignable normalement
 	}
 
 	

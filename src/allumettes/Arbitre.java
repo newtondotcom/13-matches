@@ -5,13 +5,23 @@ import java.time.chrono.IsoChronology;
 import java.util.Scanner;
 
 public class Arbitre {
+	/** Joueur 1 */
 	private Joueur j1;
+	/** Joueur 2 */
 	private Joueur j2;
+	/** Booléen indiquant si c'est au tour du joueur 1. */
 	private Boolean isPlayer1Turn;
+	/** Booléen indiquant si le joueur est confiant. */
 	private Boolean estConfiant;
 	
+	/** Scanner pour la lecture des entrées clavier. */
 	public static final Scanner SCANNER = new Scanner(System.in);
 
+	/** Crééer un arbitre pour deux joueurs.
+	 * @param j1 Joueur 1
+	 * @param j2 Joueur 2
+	 */
+	 */
 	public Arbitre(Joueur j1,Joueur j2) {
 		this.j1 = j1;
 		this.j2 = j2;
@@ -72,6 +82,9 @@ public class Arbitre {
 		}
 	}
 	
+	/** Arbitrer une partie.
+	 * @param jeu le jeu
+	 */
 	public void arbitrer (Jeu jeu) {
 		boolean notTriching = true;
 		while (jeu.getNombreAllumettes()>0 && notTriching) {
@@ -94,10 +107,10 @@ public class Arbitre {
 	
 	}
 
-		/** Afficher le nombre d'allumettes que le joueur prend.
+	/** Afficher le nombre d'allumettes que le joueur prend.
 	 * @param coup
 	 * @param joueur
-	 */
+	*/
 	public void affichageAllumettesSingulier(int coup, Joueur joueur) {
 		if (coup < 2) {
 			System.out.println(joueur.getNom() + " prend " + coup + " allumette.");

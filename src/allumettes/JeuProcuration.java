@@ -7,8 +7,8 @@ public class JeuProcuration implements Jeu {
 	
 
 
-	/** Constuire le jeu des allumettes avec un nb d'allumettes initial mis en argument.
-	 * @param nbAllumettes le nombre d'allumette initial
+	/** Constuire le jeu des allumettes.
+	 * @param jeu le jeu normal des allumettes
 	 */
 	public JeuProcuration(Jeu jeu) {
 		this.jeu = jeu;
@@ -32,11 +32,17 @@ public class JeuProcuration implements Jeu {
 		throw new OperationInterditeException("Un joueur a utilisé la méthode retirer !");
 	}
 
+	/** Définir le nombre d'allumettes encore en jeu.
+	 * @param value nombre d'allumettes encore en jeu
+	 */
 	public void setNombreAllumettes(int value) {
 		this.jeu.setNombreAllumettes(value);
 	}
 
-		
+	/** Afficher le coup joué par joueur.
+	 * @param nbPrises le nombre d'allumettes à retirer
+	 * @param joueur le joueur qui prend les allumettes
+	 */
 	public void afficherTour(int nbPrises, Joueur joueur) {
 		String all;
 		if (nbPrises > 0) {
@@ -49,6 +55,10 @@ public class JeuProcuration implements Jeu {
 
 	}
 	
+	/** Afficher le résultat final du jeu.
+	 * @param winner le joueur gagnant
+	 * @param looser le joueur perdant
+	 */
 	public void afficherResulatFinal (Joueur winner, Joueur looser) {
 		System.out.println();
 		System.out.println();
