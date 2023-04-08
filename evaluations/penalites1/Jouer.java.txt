@@ -1,4 +1,0 @@
-./allumettes/Arbitre.java:24: error: illegal start of type
-	 */
-	 ^
-1 error
