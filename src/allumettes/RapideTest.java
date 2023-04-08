@@ -2,16 +2,16 @@ package allumettes;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class TestRapide {
+public class RapideTest {
 
 	protected Jeu jeu;
-    protected Arbitre arb;
-
+    	protected Arbitre arb;
+	
 	@Before
 	public void TestRapideInit() {
         Joueur j1 = new Joueur(false,"Joueur 1");
         Joueur j2 = new Joueur(true,"rapide","Joueur 2");
-		this.jeu = new JeuAllumettes(13);
+		this.jeu = new JeuAllu(13);
 		this.arb = new Arbitre(j2,j1);
 	}
 

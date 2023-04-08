@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class Arbitre {
 	/** Joueur 1 */
-	private Joueur j1;
+	private Joueur joueur1;
 	/** Joueur 2 */
-	private Joueur j2;
+	private Joueur joueur2;
 	/** Booléen indiquant si c'est au tour du joueur 1. */
 	private Boolean isPlayer1Turn;
 	/** Booléen indiquant si le joueur est confiant. */
@@ -18,13 +18,12 @@ public class Arbitre {
 	public static final Scanner SCANNER = new Scanner(System.in);
 
 	/** Crééer un arbitre pour deux joueurs.
-	 * @param j1 Joueur 1
-	 * @param j2 Joueur 2
+	 * @param joueur1 Joueur 1
+	 * @param joueur2 Joueur 2
 	 */
-	 */
-	public Arbitre(Joueur j1,Joueur j2) {
-		this.j1 = j1;
-		this.j2 = j2;
+	public Arbitre(Joueur joueur1,Joueur joueur2) {
+		this.joueur1 = joueur1;
+		this.joueur2 = joueur2;
 		this.isPlayer1Turn = true;
 	}
 	
@@ -89,19 +88,19 @@ public class Arbitre {
 		boolean notTriching = true;
 		while (jeu.getNombreAllumettes()>0 && notTriching) {
 			if (isPlayer1Turn) {
-				notTriching = faireJouer(jeu, j1);
+				notTriching = faireJouer(jeu, joueur1);
 			}
 			else {
-				notTriching = faireJouer(jeu, j2);
+				notTriching = faireJouer(jeu, joueur2);
 			}
 			System.out.println();
 		}
 		if (notTriching) {
 			if (isPlayer1Turn) {
-				jeu.afficherResulatFinal(j1, j2);
+				jeu.afficherResulatFinal(joueur1, joueur2);
 			}
 			else {
-				jeu.afficherResulatFinal(j2, j1);
+				jeu.afficherResulatFinal(joueur2, joueur1);
 			}	
 		}
 	

@@ -63,7 +63,7 @@ public class JeuProcuration implements Jeu {
 		System.out.println();
 		System.out.println();
 		System.out.println();
-		System.out.println(winner.getNom() + " gagne");
-		System.out.println(looser.getNom() + " perd");
+		System.out.println(looser.getNom() + " perd !");
+		System.out.println(winner.getNom() + " gagne !");
 	}
 }

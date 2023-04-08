@@ -17,12 +17,11 @@ public class Joueur {
 	public Joueur() {}
 	
 	/** Constructeur de Joueur, un ordinateur.
-	 * @param isOrdi est-ce un ordinateur ?
 	 * @param niveau niveau de l'ordinateur
 	 * @param nom nom du joueur
 	 */
-	public Joueur(boolean isOrdi, String niveau , String nom) {
-		this.estOrdinateur = isOrdi;
+	public Joueur(String niveau , String nom) {
+		this.estOrdinateur = true;
 		this.niveau = niveau;
 		this.nom = nom;
 	}

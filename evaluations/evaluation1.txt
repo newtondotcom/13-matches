@@ -1,0 +1,101 @@
+Date de l'évaluation : mer. 29 mars 2023 00:06:22 CEST
+
+Nombre de similitudes : 4	(voir evaluation1/sim_java.txt)
+Les similitudes indiquent généralement du code à restructurer.
+
+Erreurs checkstyle (différentes/types) : 34/16	(voir evaluation1//checkstyle.txt)
+
+Classe OperationInterditeException : OperationInterditeException (ok)
+
+Procuration sur le jeu réel : allumettes/JeuProcuration.java (ok)
+
+L'exception NumberFormatException devrait être traité dans la classe qui implante la stratégie Humain
+  | allumettes/Joueur.java:101:                     } catch (NumberFormatException e) {
+
+OperationInterditeException, levée dans : allumettes/JeuProcuration.java (ok)
+OperationInterditeException, récupérée dans : allumettes/Arbitre.java (ok)
+
+Throwable, Exception et RuntimeException ne devraient pas être récupérées car trop générales... ok
+
+AssertionError ne doit pas être récupérée... ok
+
+Autres exceptions récupérées :
+  | allumettes/Arbitre.java:78:     } catch (CoupInvalideException e) {
+  | allumettes/Jouer.java:22:       } catch (ConfigurationException e) {
+  | allumettes/Joueur.java:74:                  } catch (CoupInvalideException e) {
+  | allumettes/Joueur.java:91:                  try {game.retirer(1);} catch (CoupInvalideException e) {;}//impossible normalement;
+  | allumettes/Joueur.java:101:                     } catch (NumberFormatException e) {
+
+Utilisation de 'Scanner' : ok
+  | allumettes/Arbitre.java:17: /** Scanner pour la lecture des entrées clavier. */
+  | allumettes/Arbitre.java:18: public static final Scanner SCANNER = new Scanner(System.in);
+
+Utilisation de 'split' : ok mais un seul split devrait suffir !  Code à restructurer...
+  | allumettes/Jouer.java:43:       String[] arg1 = args[offset+0].split("@");
+  | allumettes/Jouer.java:48:       String[] arg2 = args[offset+1].split("@");
+
+Utilisation de 'Random' : ok
+  | allumettes/Joueur.java:3:import java.util.Random;
+  | allumettes/Joueur.java:56:              Random random = new Random();
+
+Utilisation de '3' : Ne pas utiliser de constante littérale hors -1, 0 ou 1 (peut-être PRISE_MAX ?)
+  |     allumettes/JeuAllu.java:7:  private int PRISE_MAX = 3;
+
+Affichage de 'Impossible !' : ok
+
+Utilisation de 'System.exit' : ok
+
+Compilation de Jouer.java : OK.
+Compilation de Arbitre.java : OK.
+Compilation de RapideTest.java : ERREUR, pas de allumettes/RapideTest.class	(voir evaluation1/RapideTest.java.txt)
+Test exemplePresqueSujet : NON CONFORME	(voir evaluation1/exemplePresqueSujet.diff)
+Test exempleTricheurSujet : ok
+Test exempleConfiantTricheurSujet : ok
+Test exempleRobustesse : NON CONFORME	(voir evaluation1/exempleRobustesse.diff)
+Test exempleHumainTricheurExpert : ok
+Test exempleMaxLou : NON CONFORME	(voir evaluation1/exempleMaxLou.diff)
+Test exempleRapideRapide : ok
+Test exempleTricheurExpert : ok
+
+Test RobustesseTest : Le test ne se termine pas !	(voir evaluation1/RobustesseTest.txt)
+        )
+        )
+        ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+    2) testerSansStrategie(RobustesseTest)
+        ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+    3) testerStrategieInconnueSymetrieConfiant(RobustesseTest)
+        org.junit.runners.model.TestTimedOutException: test timed out after 200 milliseconds
+    4) testerStrategieDoubleAtStrategieALaFinSymetrie(RobustesseTest)
+        org.junit.runners.model.TestTimedOutException: test timed out after 200 milliseconds
+    5) testerStrategieInconnue(RobustesseTest)
+        org.junit.runners.model.TestTimedOutException: test timed out after 200 milliseconds
+    6) testerStrategieDoubleAtStrategieALaFinSymetrieConfiant(RobustesseTest)
+        org.junit.runners.model.TestTimedOutException: test timed out after 200 milliseconds
+    7) testerStrategieInconnueSymetrie(RobustesseTest)
+        org.junit.runners.model.TestTimedOutException: test timed out after 200 milliseconds
+    8) testerStrategieDoubleAtStrategieALaFinConfiant(RobustesseTest)
+        org.junit.runners.model.TestTimedOutException: test timed out after 200 milliseconds
+    9) testerStrategieDoubleAtStrategieALaFin(RobustesseTest)
+        org.junit.runners.model.TestTimedOutException: test timed out after 200 milliseconds
+    10) testerSansStrategieSymetrie(RobustesseTest)
+        ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+    11) testerDoubleConfiantConfiant(RobustesseTest)
+        ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+    12) testerSansStrategieSymetrieConfiant(RobustesseTest)
+        ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+    13) testerStrategieInconnueConfiant(RobustesseTest)
+        org.junit.runners.model.TestTimedOutException: test timed out after 200 milliseconds
+
+
+On recommence avec les classes/interfaces fournies : Jeu ConfigurationException CoupInvalideException
+Compilation de Jouer.java : OK.
+Compilation de Arbitre.java : OK.
+
+Vérification du respect du diagramme de classe...
+Test FormeTest : Tests run: 2,  Failures: 1	(voir evaluation1/FormeTest.txt)
+    1) testerC14_C15(FormeTest)
+        AssertionError: Joueur devrait avoir deux attributs expected:<2> but was:<3>
+
+
+Compilation de RapideTest.java : ERREUR, pas de allumettes.RapideTest.class	(voir evaluation1/RapideTest.java.txt)
+Aucune classe de test ne fonctionne !

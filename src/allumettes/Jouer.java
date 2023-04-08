@@ -27,8 +27,8 @@ public class Jouer {
 		}
 		
 		// Détecter si le joueur est un ordinateur ou un humain en analysant sa stratégie parmi humain, naîf, expert, rapide
-		Joueur j1 = new  Joueur();
-		Joueur j2 = new  Joueur();
+		Joueur j1 = new Joueur();
+		Joueur j2 = new Joueur();
 
 		
 		//Détecter si le paramètre confiant est entré

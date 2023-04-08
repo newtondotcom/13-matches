@@ -37,7 +37,7 @@ public class JeuAllu implements Jeu {
     		throw new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (> "+Integer.toString(this.stock)+ ")");
 		}
 		else if (nbPrises > PRISE_MAX) {
-			throw  new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (> 3)");
+			throw  new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (PRISE_MAX)");
 		}
 		else if (nbPrises < 1) {
 			throw  new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (< 1)");
