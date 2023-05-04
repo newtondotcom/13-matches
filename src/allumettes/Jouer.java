@@ -8,7 +8,7 @@ package allumettes;
 public class Jouer {
 
 	/** Nombre d'allumettes au début de la partie. */
-	public static final int nballu = 13;
+	public static final int nbAllu = 13;
 
 	/** Lancer une partie. En argument sont donnés les deux joueurs sous
 	 * la forme nom@stratégie.
@@ -16,67 +16,35 @@ public class Jouer {
 	 */
 	public static void main(String[] args) {
 
-	
 		try {
 			verifierNombreArguments(args);
+
+			Joueur joueur1 = Joueur();
+			Joueur joueur2 = Joueur();
+			//Détecter si le paramètre confiant est entré
+			int offset = 0;
+			boolean estConfiant = false;
+			if (args[0].contentEquals("-confiant")) {
+				estConfiant = true;
+				offset = 1;
+			}
+
+			//Créer les joueurs
+			joueur1 = creationJoueur(args, 0 + offset);
+			joueur2 = creationJoueur(args, 1 + offset);
+
+			// Lancer la partie
+			Arbitre arb = new Arbitre(joueur1, joueur2);
+			arb.setEstConfiant(estConfiant);
+			JeuAllu jeu = new JeuAllu(nbAllu);
+			arb.arbitrer(jeu);
+
 		} catch (ConfigurationException e) {
 			System.out.println();
 			System.out.println("Erreur : " + e.getMessage());
 			afficherUsage();
 			System.exit(1);
 		}
-		
-		// Détecter si le joueur est un ordinateur ou un humain en analysant sa stratégie parmi humain, naîf, expert, rapide
-		Joueur j1 = new Joueur();
-		Joueur j2 = new Joueur();
-
-		
-		//Détecter si le paramètre confiant est entré
-		int offset = 0;
-		boolean estConfiant = false;
-		if (args[0].contentEquals("-confiant")) {
-			estConfiant = true;
-			offset = 1;
-		}
-
-		// Récupérer le premier argument
-		String[] arg1 = args[offset+0].split("@");
-		String nom1 = arg1[0];
-		String strategie1 = arg1[1];
-
-		// Récupérer le second argument
-		String[] arg2 = args[offset+1].split("@");
-		String nom2 = arg2[0];
-		String strategie2 = arg2[1];
-
-		//Joueur 1
-		if (strategie1.equals("humain")) {
-			j1.setEstOrdinateur(false);
-			j1.setNom(nom1);
-		}
-		else {
-			j1.setEstOrdinateur(true);
-			j1.setNom(nom1);
-			j1.setNiveau(strategie1);
-		}
-
-		//Joueur 2
-		if (strategie2.equals("humain")) {
-			j2.setEstOrdinateur(false);
-			j2.setNom(nom2);
-		}
-		else {
-			j2.setEstOrdinateur(true);
-			j2.setNom(nom2);
-			j2.setNiveau(strategie2);
-		}
-
-		// Lancer la partie
-		Arbitre arb = new Arbitre(j1,j2);
-		arb.setEstConfiant(estConfiant);
-		JeuAllu jeu = new JeuAllu(nballu);
-		arb.arbitrer(jeu);
-		
 	}
 
 	/** Vérifier le nombre d'arguments fournis sur la ligne de commande.
@@ -86,11 +54,11 @@ public class Jouer {
 	private static void verifierNombreArguments(String[] args) {
 		final int nbJoueurs = 2;
 		if (args.length < nbJoueurs) {
-			throw new ConfigurationException("Trop peu d'arguments : "
+			throw new ConfigurationException("Il n'y a pas assez d'arguments : "
 					+ args.length);
 		}
 		if (args.length > nbJoueurs + 1) {
-			throw new ConfigurationException("Trop d'arguments : "
+			throw new ConfigurationException("Il y a trop d'arguments : "
 					+ args.length);
 		}
 	}
@@ -109,4 +77,53 @@ public class Jouer {
 				);
 	}
 
+	/** Créer un joueur à partir de la description des deux joueurs.
+	 * @param args la description des deux joueurs
+	 * @param numJoueur l'indice du joueur (1er ou 2eme)
+	 * @return le nouveau joueur
+	 * @throws ConfigurationException
+	 */
+	private static Joueur creationJoueur(String[] args, int numJoueur) {
+		String nomJoueur;
+		String nomStrategie;
+		String[] joueur = args[numJoueur].split("@");
+		if (joueur.length != 2) {
+			throw new ConfigurationException("Erreur !");
+		}
+		try {
+			nomJoueur = joueur[0];
+			nomStrategie = joueur[1];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			throw new ConfigurationException("Il manque un argument !");
+		}
+		return (new Joueur(nomJoueur, stringToStrategie(nomStrategie, nomJoueur)));
+	}
+
+	/** Obtenir la stratégie d'un jeu à partir du nom de la stratégie et du
+	 * nom du joueur.
+	 * @param nomStrategie le nom de la stratégie
+	 * @param nomJoueur le nom du joueur
+	 * @return la stratégie dont le nom est nomStrategie
+	 * @throws ConfigurationException
+	 */
+	private static Strat stringToStrategie(String nomStrategie, String nomJoueur) {
+		switch (nomStrategie) {
+			case "naif" :
+				return new Naif();
+			case "rapide" :
+				return new Rapide();
+			case "lente" :
+				return new Lente();
+			case "expert" :
+				return new Expert();
+			case "humain" :
+				return new Humain(nomJoueur);
+			case "tricheur" :
+				return new Tricheur();
+			default:
+				throw new ConfigurationException("La stratégie n'existe pas.");
+		}
+	}
+
+	
 }

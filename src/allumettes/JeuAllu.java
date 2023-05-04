@@ -3,9 +3,10 @@ package allumettes;
 public class JeuAllu implements Jeu {
 	/** Stock d'allumettes restant */
 	private int stock;
-	/** Nombre maximum d'allumettes que l'on peut prendre */
-	private int PRISE_MAX = 3;
 	
+	/** Nombre maximum d'allumettes que l'on peut prendre */
+	private int priseMax = 3;
+
 	/** Constructeur de JeuAllu.
 	 * @param stock le nombre d'allumettes
 	 */
@@ -32,17 +33,14 @@ public class JeuAllu implements Jeu {
 	 * @param nbPrises le nombre d'allumettes à retirer
 	 * @throws CoupInvalideException tentative de prendre un nombre invalide d'allumettes 
 	 */
-	public void retirer(int nbPrises) throws CoupInvalideException{
+	public void retirer(int nbPrises) throws CoupInvalideException {
 		if (nbPrises > this.stock) {
-    		throw new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (> "+Integer.toString(this.stock)+ ")");
-		}
-		else if (nbPrises > PRISE_MAX) {
-			throw  new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (PRISE_MAX)");
-		}
-		else if (nbPrises < 1) {
-			throw  new CoupInvalideException(nbPrises,"Nombre invalide : "+ Integer.toString(nbPrises)+" (< 1)");
-		}
-		else {
+    		throw new CoupInvalideException(nbPrises, "Nombre invalide : " + Integer.toString(nbPrises) + " (> " + Integer.toString(this.stock) + ")");
+		} else if (nbPrises > priseMax) {
+			throw  new CoupInvalideException(nbPrises, "Nombre invalide : " + Integer.toString(nbPrises) + " (>" + Integer.toString(priseMax) +")");
+		} else if (nbPrises < 1) {
+			throw  new CoupInvalideException(nbPrises, "Nombre invalide : " + Integer.toString(nbPrises) + " (< 1)");
+		} else {
 			this.stock = this.stock - nbPrises;
 		}
 	}
@@ -53,25 +51,12 @@ public class JeuAllu implements Jeu {
 	 * @param joueur le joueur qui prend les allumettes
 	 */
 	public void afficherTour(int nbPrises, Joueur joueur) {
-		String all;
+		String allu;
 		if (nbPrises > 0) {
-			all =" allumettes";
+			allu = " allumettes";
+		} else {
+			allu = " allumette";
 		}
-		else {
-			all =" allumette";
-		}
-		System.out.println(joueur.getNom() + " prend "+Integer.toString(nbPrises)+all);
-
-	}
-	
-	/** Afficher le résultat final.
-	 * @param winner le joueur gagnant
-	 * @param looser le joueur perdant
-	 */
-	public void afficherResulatFinal (Joueur winner, Joueur looser) {
-		System.out.println();
-		System.out.println(looser.getNom() + " perd !");
-		System.out.println(winner.getNom() + " gagne !");
-
+		System.out.println(joueur.getNom() + " prend " + Integer.toString(nbPrises) + allu);
 	}
 }

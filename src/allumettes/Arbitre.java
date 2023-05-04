@@ -1,19 +1,19 @@
 package allumettes;
-
-import java.time.chrono.IsoChronology;
-
 import java.util.Scanner;
 
 public class Arbitre {
 	/** Joueur 1 */
 	private Joueur joueur1;
+
 	/** Joueur 2 */
 	private Joueur joueur2;
+
 	/** Booléen indiquant si c'est au tour du joueur 1. */
 	private Boolean isPlayer1Turn;
-	/** Booléen indiquant si le joueur est confiant. */
+
+	/** Booléen indiquant si l'arbitre est confiant. */
 	private Boolean estConfiant;
-	
+
 	/** Scanner pour la lecture des entrées clavier. */
 	public static final Scanner SCANNER = new Scanner(System.in);
 
@@ -21,16 +21,16 @@ public class Arbitre {
 	 * @param joueur1 Joueur 1
 	 * @param joueur2 Joueur 2
 	 */
-	public Arbitre(Joueur joueur1,Joueur joueur2) {
+	public Arbitre(Joueur joueur1, Joueur joueur2) {
 		this.joueur1 = joueur1;
 		this.joueur2 = joueur2;
 		this.isPlayer1Turn = true;
 	}
-	
+
 	/** Obtenir si le joueur est confiant.
 	 * @return oui ou non
 	 */
-	public boolean estIlConfiant () {
+	public boolean estIlConfiant() {
 		return this.estConfiant;
 	}
 
@@ -48,10 +48,10 @@ public class Arbitre {
 	 * @throws OperationInterditeException
 	 */
 	public boolean faireJouer(Jeu jeu, Joueur joueur) {
-		boolean estTricheur = false;
+		boolean triche = false;
 		int coup;
 		int nb = jeu.getNombreAllumettes();
-		System.out.println("Allumettes restantes : "+ Integer.toString(nb));
+		System.out.println("Allumettes restantes : " + Integer.toString(nb));
 		try {
 			coup = joueur.getPrise(jeuConfiant(jeu));
 			affichageAllumettesSingulier(coup, joueur);
@@ -59,13 +59,13 @@ public class Arbitre {
 		} catch (OperationInterditeException e) {
 			System.out.println("Abandon de la partie car " + joueur.getNom()
 			+ " triche !");
-			estTricheur = true;
+			triche = true;
 		}
-		return !estTricheur;
+		return !Triche;
 	}
 
 	/** Retirer des allumettes.  Le nombre d'allumettes doit être compris
-	 * entre 1 et PRISE_MAX, dans la limite du nombre d'allumettes encore
+	 * entre 1 et priseMax, dans la limite du nombre d'allumettes encore
 	 * en jeu.
 	 * @param jeu le jeu
 	 * @param coup le nombre d'allumettes à retirer
@@ -82,33 +82,30 @@ public class Arbitre {
 	}
 	
 	/** Arbitrer une partie.
-	 * @param jeu le jeu
-	 */
-	public void arbitrer (Jeu jeu) {
+	* @param jeu le jeu
+	*/
+	public void arbitrer(Jeu jeu) {
 		boolean notTriching = true;
-		while (jeu.getNombreAllumettes()>0 && notTriching) {
+		while (jeu.getNombreAllumettes() > 0 && notTriching) {
 			if (isPlayer1Turn) {
 				notTriching = faireJouer(jeu, joueur1);
-			}
-			else {
+			} else {
 				notTriching = faireJouer(jeu, joueur2);
 			}
 			System.out.println();
 		}
 		if (notTriching) {
 			if (isPlayer1Turn) {
-				jeu.afficherResulatFinal(joueur1, joueur2);
+				afficherResulatFinal(joueur1, joueur2);
+			} else {
+				afficherResulatFinal(joueur2, joueur1);
 			}
-			else {
-				jeu.afficherResulatFinal(joueur2, joueur1);
-			}	
 		}
-	
 	}
 
 	/** Afficher le nombre d'allumettes que le joueur prend.
-	 * @param coup
-	 * @param joueur
+	* @param coup le coup
+	* @param joueur le joueur
 	*/
 	public void affichageAllumettesSingulier(int coup, Joueur joueur) {
 		if (coup < 2) {
@@ -119,8 +116,8 @@ public class Arbitre {
 	}
 
 	/** Obtenir le bon jeu en fonction de l'option -confiant.
-	 * @param jeu
-	 * @return le bon jeu en fonction de l'option -confiant
+	 * @param jeu le jeu
+	 * @return le bon jeu
 	 */
 	public Jeu jeuConfiant(Jeu jeu) {
 		if (!this.estConfiant) {
@@ -128,6 +125,15 @@ public class Arbitre {
 		} else {
 			return jeu;
 		}
+	}
+
+	/** Afficher le résultat final.
+	 * @param winner le joueur gagnant
+	 * @param looser le joueur perdant
+	 */
+	public void afficherResulatFinal(Joueur winner, Joueur looser) {
+		System.out.println(looser.getNom() + " perd !");
+		System.out.println(winner.getNom() + " gagne !");
 	}
 }
 

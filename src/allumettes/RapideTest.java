@@ -5,33 +5,30 @@ import static org.junit.Assert.*;
 public class RapideTest {
 
 	protected Jeu jeu;
-    	protected Arbitre arb;
-	
+	protected Strat niveau;
+
 	@Before
 	public void TestRapideInit() {
-        Joueur j1 = new Joueur(false,"Joueur 1");
-        Joueur j2 = new Joueur(true,"rapide","Joueur 2");
+		this.niveau = new Rapide();
 		this.jeu = new JeuAllu(13);
-		this.arb = new Arbitre(j2,j1);
 	}
 
 	@Test
 	public void testerRapideSupAPMax() {
-        int a = this.arb.j1.getPrise();
-		assertEquals(a, Jeu.PRISE_MAX);
+		assertEquals(this.niveau.getPrise(this.jeu), Jeu.priseMax);
 	}
 	
 	
 	@Test
 	public void testerRapideEquAPMax() {
 		
-		while (this.jeu.getNombreAllumettes() > Jeu.PRISE_MAX) {
+		while (this.jeu.getNombreAllumettes() > Jeu.priseMax) {
 			try {
 				this.jeu.retirer(1);
 			} catch (CoupInvalideException e) {
 				// Impossible d'arriver ici.
 			}
 		}
-		assertEquals(this.arb.j1.getPrise(), Math.max(1, this.jeu.getNombreAllumettes() - 1));
+		assertEquals(this.niveau.getPrise(this.jeu), Math.max(1, this.jeu.getNombreAllumettes() - 1));
 	}
 }
