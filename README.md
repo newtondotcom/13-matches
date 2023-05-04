@@ -6,4 +6,4 @@ This project was realized during my engineering studies in Digital Sciences at E
 
 # Launch  
 
-To launch, you can run `javac allumettes.Jouer` in the main directory.
+To launch, you can run `javac allumettes/*.java` in the main directory and then `java allumettes.Jouer`
